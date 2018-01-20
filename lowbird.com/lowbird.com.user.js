@@ -3,7 +3,8 @@
 // @namespace      my.script.org
 // @include        http*://www.lowbird.com*
 // @include        http*://lowbird.com*
-// @require		   https://code.jquery.com/jquery-3.2.1.slim.min.js
+// @require		     https://code.jquery.com/jquery-3.2.1.slim.min.js
+// @version        2
 // ==/UserScript==
 
 /* 
@@ -15,7 +16,7 @@ b3 = 64x96
 */
 
 
-console.log("Alive!");
+console.log("Alive!2");
 
 var IMGUR_ALBUM_URL = "http://api.imgur.com/2/account/albums/77Uqd.json";
 
