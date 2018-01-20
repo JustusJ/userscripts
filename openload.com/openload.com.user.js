@@ -5,7 +5,7 @@
 // @include     https://openload.co/*
 // @require     https://code.jquery.com/jquery-3.2.1.slim.min.js
 // @version  1
-// @grant    none
+// @grant    unsafeWindow
 // ==/UserScript==
 
 // Set this to make the page think it got opened after doing the "switch to ad-page and open the vid in new tab" thing
