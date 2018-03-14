@@ -11,9 +11,11 @@ $(function () {
 
   var json = {};
 
+  var headline = $("h1");
   var textarea = $("<textarea>");
   textarea.css({ width: "100%" });
   textarea.on("mouseenter", selectOnHover);
+  headline.css({color: "yellow"});
   $(".widetitle").append(textarea);
 
   function display(json) {
@@ -23,8 +25,14 @@ $(function () {
 
   function receiveMessage(event) {
     console.log("MESSAGE", arguments, event.data);
+    if(event.data) {
+      headline.css({color: "green"});
+    } else {
+      headline.css({color: "red"});
+    }
     json["duration"] = event.data;
     display(json);
+    textarea.select();
   }
 
   unsafeWindow.addEventListener("message", receiveMessage, false);
