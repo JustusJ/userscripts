@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         porntrex.com
 // @namespace    porntrex.com
-// @version      1
+// @version      2
 // @author       You
 // @match        https://www.porntrex.com/video/*
 // @grant        none
@@ -12,6 +12,10 @@
     function selectOnHover(event) {
         event.target.focus();
         event.target.select();
+    }
+
+    function titleToSize(title) {
+      return parseInt(title, 10);
     }
 
     console.log(window.flashvars);
@@ -27,25 +31,25 @@
     var urls = [];
 
     if(info.video_url) {
-        urls.push({url: info.video_url, text: info.video_url_text});
+        urls.push({url: info.video_url, size: titleToSize(info.video_url_text)});
     }
     if(info.video_alt_url) {
-        urls.push({url: info.video_alt_url, text: info.video_alt_url_text});
+        urls.push({url: info.video_alt_url, size: titleToSize(info.video_alt_url_text)});
     }
     if(info.video_alt_url2) {
-        urls.push({url: info.video_alt_url2, text: info.video_alt_url2_text});
+        urls.push({url: info.video_alt_url2, size: titleToSize(info.video_alt_url2_text)});
     }
     if(info.video_alt_url3) {
-        urls.push({url: info.video_alt_url3, text: info.video_alt_url3_text});
+        urls.push({url: info.video_alt_url3, size: titleToSize(info.video_alt_url3_text)});
     }
     if(info.video_alt_url4) {
-        urls.push({url: info.video_alt_url4, text: info.video_alt_url4_text});
+        urls.push({url: info.video_alt_url4, size: titleToSize(info.video_alt_url4_text)});
     }
     if(info.video_alt_url5) {
-        urls.push({url: info.video_alt_url5, text: info.video_alt_url5_text});
+        urls.push({url: info.video_alt_url5, size: titleToSize(info.video_alt_url5_text)});
     }
     if(info.video_alt_url6) {
-        urls.push({url: info.video_alt_url6, text: info.video_alt_url6_text});
+        urls.push({url: info.video_alt_url6, size: titleToSize(info.video_alt_url6_text)});
     }
 
     json = JSON.stringify({

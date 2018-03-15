@@ -3,7 +3,7 @@
 // @namespace   vidz7.com
 // @include     http://www.vidz7.com/*
 // @require     https://code.jquery.com/jquery-3.2.1.slim.min.js
-// @version     2
+// @version     3
 // @grant       unsafeWindow
 // ==/UserScript==
 
@@ -42,12 +42,16 @@ $(function () {
     event.target.select();
   }
 
+  function titleToSize(title) {
+    return parseInt(title, 10);
+  }
+
   var url = document.location.href;
   var poster = $("meta[property='og:image']").attr("content");
   var id = "vidz7.com-" + $("section.left-column article").attr("id").replace("post-id-", "");
   var title = $.trim($(".widetitle h1").text());
   var urls = $.makeArray($(".playerplace .dropmenu a")).map(function(link) {
-    return {url: $(link).attr("href"), text: $.trim($(link).text())};
+    return {url: $(link).attr("href"), size: titleToSize($(link).text())};
   });
   var duration = 4;
 
