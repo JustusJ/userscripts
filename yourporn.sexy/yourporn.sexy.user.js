@@ -49,8 +49,7 @@ $(function() {
       textarea.css({width: "100%"});
       textarea.on("mouseenter", selectOnHover);
       div.append(textarea);
-      unsafeWindow.location.href = updateUrl;
-      //div.append(inDiv(JSON.stringify(info)).css({fontSize: "10px"}).on("mouseenter", selectOnHover));
+      div.append(inDiv(JSON.stringify(info)).css({fontSize: "10px"}).on("mouseenter", selectOnHover));
   }
 
   var $video = $("video");
