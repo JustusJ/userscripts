@@ -16,7 +16,7 @@ unsafeWindow.ffopened = true;
 $(function() {
   var video = $("<video>"); 
   video.on("loadedmetadata", function(event) {
-    var duration = Math.round(video.get(0).duration);
+    var duration = parseInt(video.get(0).duration, 10);
     console.log("duration found: ", duration);
     unsafeWindow.top.postMessage(duration, "*");
   });
