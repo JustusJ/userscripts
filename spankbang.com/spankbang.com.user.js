@@ -10,8 +10,6 @@
 // @require     https://code.jquery.com/jquery-3.2.1.slim.min.js
 // ==/UserScript==
 
-console.log("ASDASDADSA");
-
 (function() {
   'use strict';
 
@@ -25,6 +23,17 @@ console.log("ASDASDADSA");
       event.target.focus();
       event.target.select();
   }
+
+  function cleanup() {
+    $(".user_panel_guest").remove();
+    $(".ttaa").remove();
+    $("#container .right").empty();
+    $("#container .right").append($("#video .toolbar .right_set"));
+
+    $("<style>").attr("rel", "stylesheet").text(".right_set .active {font-weight: bold;}").appendTo("body")
+  }
+
+  cleanup();
 
   var video = $("#video_player");
 
