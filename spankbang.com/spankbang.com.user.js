@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         spankbang.com
 // @namespace    http://tampermonkey.net/
-// @version      1
+// @version      2
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.spankbang.com/*/video/*
@@ -27,10 +27,10 @@
   function cleanup() {
     $(".user_panel_guest").remove();
     $(".ttaa").remove();
-    $("#container .right").empty();
-    $("#container .right").append($("#video .toolbar .right_set"));
+    $("#container .right div[style]").remove();
+    $("#container .right").prepend($("#video .toolbar .right_set"));
 
-    $("<style>").attr("rel", "stylesheet").text(".right_set .active {font-weight: bold;}").appendTo("body")
+    $("<style>").attr("rel", "stylesheet").text(".right_set .active {font-weight: bold;}").appendTo("body");
   }
 
   cleanup();
