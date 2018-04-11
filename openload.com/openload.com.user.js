@@ -5,7 +5,7 @@
 // @include     https://openload.co/*
 // @include     https://oload.xyz/*
 // @require     https://code.jquery.com/jquery-3.2.1.slim.min.js
-// @version     3
+// @version     4
 // @grant       unsafeWindow
 // ==/UserScript==
 
