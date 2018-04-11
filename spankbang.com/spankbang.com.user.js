@@ -49,6 +49,8 @@
     {url: window.stream_url_480p, size: 480}, {url: window.stream_url_720p, size: 720}, {url: window.stream_url_1080p, size: 1080}, {url: window.stream_url_4k, size: 4096}
   ]);
   var duration = $.trim($(".details .right_side span").text());
+  var parts = duration.split(":");
+  duration = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10) * 60;
 
   var json = JSON.stringify({
       url: url, poster: poster, id: id, title: title, videoUrls: urls, duration: duration
