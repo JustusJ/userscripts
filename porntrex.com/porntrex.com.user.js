@@ -1,13 +1,41 @@
 // ==UserScript==
 // @name         porntrex.com
 // @namespace    porntrex.com
-// @version      2
+// @version      0.1
+// @description  try to take over the world!
 // @author       You
 // @match        https://www.porntrex.com/video/*
+// @match        https://www.porntrex.com/playlists/*
 // @grant        none
 // ==/UserScript==
 
 (function() {
+
+    if(document.location.href.match(/\/video\//)) {
+        video();
+    }
+    if(document.location.href.match(/\/playlists\//)) {
+        playlists();
+    }
+
+ })();
+
+ function playlists() {
+    var videos = $('.owl-stage, .owl-item').removeAttr("style");
+    var css = `
+    .owl-stage { display: flex; flex-wrap: wrap; }
+    .owl-item { flex: 1 1 25%; }
+    `
+    $('<style rel="stylesheet" type="text/css">').text(css).appendTo("head");
+    $('.video-holder .player, .owl-nav, .owl-dots, .owl-item.cloned').remove();
+
+    $(".owl-item *").off();
+ }
+
+ function video() {
+    function cleanup() {
+        $(".link-holder-top").remove();
+    }
 
     function selectOnHover(event) {
         event.target.focus();
@@ -18,7 +46,8 @@
       return parseInt(title, 10);
     }
 
-    console.log(window.flashvars);
+    cleanup();
+
     var info = window.flashvars;
     var url = document.location.href;
     var poster = "https:" + info.preview_url;
@@ -61,5 +90,4 @@
     textarea.on("mouseenter", selectOnHover);
 
     $(".video-holder").prepend(textarea);
-
- })();
+ } 
