@@ -6,16 +6,25 @@
 // @author       You
 // @match        https://www.porntrex.com/video/*
 // @match        https://www.porntrex.com/playlists/*
+// @match        https://www.porntrex.com/embed/*
 // @grant        none
 // ==/UserScript==
+function injectCss(css) {
+    $('<style rel="stylesheet" type="text/css">').text(css).appendTo("head");
+}
 
 (function() {
-
     if(document.location.href.match(/\/video\//)) {
         video();
     }
     if(document.location.href.match(/\/playlists\//)) {
         playlists();
+    }
+
+    if(document.location.href.match(/\/embed\//)) {
+        console.log(3);    
+        var newUrl = document.location.href.replace("embed", 'video') + "/asd";
+        document.location.href = newUrl;
     }
 
  })();
@@ -26,13 +35,19 @@
     .owl-stage { display: flex; flex-wrap: wrap; }
     .owl-item { flex: 1 1 25%; }
     `
-    $('<style rel="stylesheet" type="text/css">').text(css).appendTo("head");
+    injectCss(css);
     $('.video-holder .player, .owl-nav, .owl-dots, .owl-item.cloned').remove();
 
-    $(".owl-item *").off();
+    $(".owl-item, .owl-item *").off();
  }
 
  function video() {
+    var css = `
+    .previewImages { display: grid; grid-template-columns: repeat(5, 20%); grid-gap: .5rem; }
+    .previewImage { width: 100%; }
+    `
+    injectCss(css);
+
     function cleanup() {
         $(".link-holder-top").remove();
     }
@@ -44,6 +59,18 @@
 
     function titleToSize(title) {
       return parseInt(title, 10);
+    }
+
+    var baseUrl = "https://thumbs.porntrex.com/contents/videos_screenshots/$$$id_range/$$$id/timelines/timeline_mp4/200x116/$$$num.jpg"
+
+    function screencapUrls(url, count) {
+        var result = [];
+        var imageCount = duration / 10;
+        for (let i = 1; i <= count; i++) {
+            var num = Math.floor(imageCount / count) * i + 1;
+            result.push(url.replace('{time}', num));
+        }
+        return result;
     }
 
     cleanup();
@@ -59,6 +86,7 @@
     }
     var urls = [];
 
+    
     if(info.video_url) {
         urls.push({url: info.video_url, size: titleToSize(info.video_url_text)});
     }
@@ -90,4 +118,10 @@
     textarea.on("mouseenter", selectOnHover);
 
     $(".video-holder").prepend(textarea);
+    
+    var urls = screencapUrls(info.timeline_screens_url, 15);
+    var imagesContainer = $("<div class='previewImages'>").appendTo(".player");
+    urls.forEach(function(url) {
+        imagesContainer.append($("<img class='previewImage'>").attr("src", url));
+    })
  } 
