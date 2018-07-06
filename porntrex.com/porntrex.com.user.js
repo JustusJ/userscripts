@@ -48,8 +48,28 @@ function injectCss(css) {
     `
     injectCss(css);
 
-    function cleanup() {
+    function cleanup(posterUrl) {
         $(".link-holder-top").remove();
+        
+        // Show donload links on top
+        var downloadLinks = $(".video-holder .info .item2").clone();
+        downloadLinks.css({display: 'inline'});
+        downloadLinks.find('a').each(function() {
+            var link = $(this);
+            if(link.text().match(/1080/)) {
+                link.css({backgroundColor: '#d4323e'});
+            }
+        })
+        $("h1").append($("<small>").append(downloadLinks).css({margin: '10px 0'}));
+
+        // show bottom right of video poster for faster source identification
+        $(".navbar-brand").empty();
+        console.log($(".navbar-brand"));
+        $(".navbar-brand").css({
+            backgroundImage: `url(${posterUrl})`,
+            backgroundPosition: 'bottom right',
+            width: '300px'
+        });
     }
 
     function selectOnHover(event) {
@@ -72,8 +92,6 @@ function injectCss(css) {
         }
         return result;
     }
-
-    cleanup();
 
     var info = window.flashvars;
     var url = document.location.href;
@@ -114,7 +132,7 @@ function injectCss(css) {
     });
 
     var textarea = $("<textarea>").val(json);
-    textarea.css({width: "100%"});
+    textarea.css({width: "100%", fontSize: '12px'});
     textarea.on("mouseenter", selectOnHover);
 
     $(".video-holder").prepend(textarea);
@@ -124,4 +142,7 @@ function injectCss(css) {
     urls.forEach(function(url) {
         imagesContainer.append($("<img class='previewImage'>").attr("src", url));
     })
+
+    // cleanup last, so its changes dont interfer with getting info from the page
+    cleanup(poster);
  } 

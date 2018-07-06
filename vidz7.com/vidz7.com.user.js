@@ -20,14 +20,25 @@ $(function () {
   $(".widetitle").append(textarea);
 
   function display(json) {
-    json_string = JSON.stringify(json);
+    var json_string = JSON.stringify(json);
     textarea.val(json_string);
   }
 
   function receiveMessage(event) {
     if(event.data) {
       headline.css({color: "green"});
-      json["duration"] = event.data;
+      var message = JSON.parse(event.data);
+      if(message.deleted) { return; }
+      console.log("message: ", message);
+      json.duration = message.duration;
+      json.videoUrls = [{ url: message.src, size: message.height }];
+      if(message.fileSize) {
+        var mbPerSecond = message.fileSize / (message.duration / 60);
+
+        var infoText = headline.text() + ' (' + message.fileSize + ' MB, ' + Math.round(mbPerSecond) + ' MB/min)';
+        headline.text(infoText);
+      }
+
       display(json);
       textarea.select();
       document.title = "X" + document.title;
@@ -86,7 +97,7 @@ $(function () {
   json["poster"] = poster;
   json["id"] = id;
   json["title"] = title;
-  json["videoUrls"] = urls;
+  //json["videoUrls"] = urls;
 
   display(json);
 
